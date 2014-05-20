@@ -32,7 +32,10 @@ def lcs_table(X, Y):
 
 def assemble_lcs(A, X, Y, i, j):
     """Reconstruct the longest common subsequence of strings X and Y
-    by backtracking through the lcs table."""
+    by backtracking through the lcs table.
+
+    Note that i = 1, ..., len(X) and j = 1, ..., len(Y) inclusive.
+    """
     if A[i][j] == 0:  # No common subsequence
         return ""
     elif X[i - 1] == Y[j - 1]:  # Common last char.
