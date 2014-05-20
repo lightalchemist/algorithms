@@ -19,13 +19,12 @@ def lcs_table(X, Y):
     prefixes X[:i] and Y[:j].
     """
     m, n = len(X), len(Y)
-
     A = np.zeros((m + 1, n + 1), dtype=np.uint)
     for i in range(1, m + 1):
         for j in range(1, n + 1):
-            if X[i - 1] == Y[j - 1]:
-                A[i][j] = 1 + A[i - 1][j - 1]
-            else:
+            if X[i - 1] == Y[j - 1]:  # Common last char.
+                A[i][j] = 1 + A[i - 1][j - 1]  # So lcs is this 1 char + lcs of both strings without this last char.
+            else:  # Otherwise, lcs is the longer of lcs(X[:i], Y[:j-1]) and lcs(X[:i-1], Y[:j]
                 A[i][j] = max(A[i - 1][j], A[i][j - 1])
 
     return A
@@ -34,10 +33,12 @@ def lcs_table(X, Y):
 def assemble_lcs(A, X, Y, i, j):
     """Reconstruct the longest common subsequence of strings X and Y
     by backtracking through the lcs table."""
-    if A[i][j] == 0:
+    if A[i][j] == 0:  # No common subsequence
         return ""
-    elif X[i - 1] == Y[j - 1]:
+    elif X[i - 1] == Y[j - 1]:  # Common last char.
+        # Append this char to lcs of strings w/o this last char.
         return assemble_lcs(A, X, Y, i - 1, j - 1) + X[i - 1]
+    # Else return longer of lcs of one string to another without this last char.
     elif A[i][j - 1] > A[i - 1][j]:
         return assemble_lcs(A, X, Y, i, j - 1)
     else:
