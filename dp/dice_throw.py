@@ -34,6 +34,7 @@ def memo(f):
 
 @memo
 def n_ways_recursive(s, n, m):
+    """Recursive solution for the given problem."""
     if s < n:
         return 0
     elif n == 1 and s <= m:
@@ -43,18 +44,20 @@ def n_ways_recursive(s, n, m):
 
 
 def n_ways_dp(s, n, m):
+    """Computes the number of ways to get a sum of 's'
+    from the value of 'n' dice each with 'm' faces.
+    A[i][j] stores the number of ways to get a sum of 'j'
+    by throwing 'i' dice each with 'm' faces."""
     A = np.zeros((n+1, s+1), dtype=np.uint)
-    for i in range(1, n+1):
-        for j in range(1, s+1):
-            if j < i:  # Not possible to come up with sum.
-                A[i][j] = 0
-            elif i == 1 and j <= m:
-                A[i][j] = 1
-            else:
-                A[i][j] = sum((A[i-1][j-roll]) for roll in xrange(1, min(j+1, m+1)))
+    for j in range(1, min(s+1, m+1)):  # Only 1 way to get score of 's' with 1 die if largest value is m.
+        A[1][j] = 1
+
+    for i in range(2, n+1):  # Start from case of 2 dice since 1 die case taken care of already.
+        for j in range(i, s+1):  # Sum must be at least the number of dice 'i' we are throwing.
+            A[i][j] = sum((A[i-1][j-roll]) for roll in xrange(1, min(j+1, m+1)))
 
     print(A)
-    return A[n][s]
+    return A[n][s]  # Number of ways to get 's' from 'n' dice.
 
 
 def test():
