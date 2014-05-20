@@ -9,7 +9,7 @@ Description:
     Suppose you are given 'n' dice, each with 'm' faces.
     So the faces of the die takes on exactly one value in the range [1, m].
     You are also given a value 's'.
-    Determine the number of ways to obtain S as the sum of the n dice.
+    Determine the number of ways to obtain 's' as the sum of the n dice.
 
 Details of the problem can be found at: http://www.geeksforgeeks.org/dice-throw-problem/
 """
