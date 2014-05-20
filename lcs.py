@@ -75,6 +75,10 @@ def test():
     Y = "B"
     assert longest_common_sequence(X, Y) == ""
 
+    X = "thisisatest"
+    Y = "testing123testing"
+    assert longest_common_sequence(X, Y) == "tsitest"
+
 
 if __name__ == "__main__":
     test()
