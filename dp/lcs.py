@@ -52,33 +52,29 @@ def longest_common_sequence(X, Y):
 
 
 def test():
-    X = "XMJYAUZ"
-    Y = "MZJAWXU"
+    X, Y = "XMJYAUZ", "MZJAWXU"
     assert longest_common_sequence(X, Y) == "MJAU"
 
-    X = "ABCDGH"
-    Y = "AEDFHR"
+    X, Y = "ABCDGH", "AEDFHR"
     assert longest_common_sequence(X, Y) == "ADH"
 
-    X = "AGGTAB"
-    Y = "GXTXAYB"
+    X, Y = "AGGTAB", "GXTXAYB"
     assert longest_common_sequence(X, Y) == "GTAB"
 
-    X = ""
-    Y = ""
+    X, Y = "", ""
     assert longest_common_sequence(X, Y) == ""
 
-    X = "A"
-    Y = "B"
+    X, Y = "A", "B"
     assert longest_common_sequence(X, Y) == ""
 
-    X = ""
-    Y = "B"
+    X, Y = "", "B"
     assert longest_common_sequence(X, Y) == ""
 
-    X = "thisisatest"
-    Y = "testing123testing"
+    X, Y = "thisisatest", "testing123testing"
     assert longest_common_sequence(X, Y) == "tsitest"
+
+    X, Y = "1234", "1224533324"
+    assert longest_common_sequence(X, Y) == "1234"
 
 
 if __name__ == "__main__":
