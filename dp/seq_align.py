@@ -18,14 +18,14 @@ def sequence_alignment_table(X, Y, gap_cost, mismatch_cost):
     m, n = len(X), len(Y)
     A = np.zeros((m + 1, n + 1), dtype=np.uint)
 
-    for i in range(m + 1):
+    for i in range(m + 1):  # Cost of matching i chars to 0 chars from other string.
         A[i][0] = i*gap_cost
     for j in range(n + 1):
         A[0][j] = j*gap_cost
 
     for i in range(1, m + 1):
         for j in range(1, n + 1):
-            if X[i-1] == Y[j-1]:
+            if X[i-1] == Y[j-1]:  # Chars match, so 0 cost.
                 m_cost = 0
             else:
                 m_cost = mismatch_cost[(X[i-1], Y[j-1])]
@@ -39,12 +39,12 @@ def sequence_alignment_table(X, Y, gap_cost, mismatch_cost):
 
 def assemble(A, X, Y):
     GAP_SYMBOL = '_'
-    i, j = len(X), len(Y)
     aligned_X, aligned_Y = "", ""
+    i, j = len(X), len(Y)
     while i > 0 and j > 0:
-        # Eact match or mismatch
+        # Exact match or mismatch
         if A[i-1][j-1] < A[i-1][j] and A[i-1][j-1] < A[i][j-1]:
-            aligned_X = X[i-1] + aligned_X
+            aligned_X = X[i-1] + aligned_X  # Prepend char to current result.
             aligned_Y = Y[j-1] + aligned_Y
             i -= 1
             j -= 1
