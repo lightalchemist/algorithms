@@ -16,21 +16,38 @@ from collections import defaultdict
 
 
 def build_next_state_table(pattern, charset):
-    m = len(pattern)
-    next_state = [defaultdict(int) for _ in range(m + 1)]
+    pattern_length = len(pattern)
 
-    prefix = ''
-    for k, c in enumerate(pattern):
-        for a in charset:
-            pass
-            next_state[k+1]
+    # state range from 0, 1, ..., patternlength inclusive
+    next_state = [defaultdict(int) for _ in range(pattern_length + 1)]
+
+    next_state[0][pattern[0]] = 1  # Only first char of pattern moves to next state.
+    for k in range(1, pattern_length + 1):
+        prefix_k = pattern[:k]
+        for c in charset:
+            pk_c = prefix_k + c
+            i = min(k+1, pattern_length)  # Smaller of len(pk_c) and pattern_length
+            # if pattern[:i] is a suffix of pk_c then seeing char c in state k
+            # will move it to state i (i.e., we have seen i consecutive chars
+            # of pattern).
+            # Else, keep shifting pattern to the right
+            # (i.e., i -= 1) and comparing until we found a match.
+            # Below is a schematic of this process:
+            # ------pk_c------
+            #               ^-pattern[:i]----
+            while not pk_c.endswith(pattern[:i]):
+                i -= 1
+
+            # At this point, the first i chars of pattern is suffix of pk_c
+            # so seeing char c in state k will move it to state i.
+            next_state[k][c] = i
 
     return next_state
 
 
 def match(pattern, text, next_state=None):
     if next_state is None:
-        charset = set(text.split())
+        charset = set(list(text))
         next_state = build_next_state_table(pattern, charset)
 
     pattern_length = len(pattern)
@@ -43,12 +60,9 @@ def match(pattern, text, next_state=None):
 
 def print_matches(pattern, text, matcher):
     pattern_length = len(pattern)
-    print('-' * max(pattern_length, 50))
-    print("Search pattern : {}".format(pattern))
-    print('-' * max(pattern_length, 50))
     for num_shifts in matcher:
         print(text)
-        print(' '*num_shifts + '^'*pattern_length)
+        print(' '*num_shifts + '^'*pattern_length)  # Prints '^' under matches.
 
 
 def test():
@@ -70,7 +84,16 @@ def test():
     next_state[7]['C'] = 2
 
     text = "GTAACACAGAACACAGACGA"
-    print_matches(pattern, text, match(pattern, text, next_state))
+    # print_matches(pattern, text, match(pattern, text, next_state))
+
+    pattern_length = len(pattern)
+    print('-' * max(pattern_length, 50))
+    print("Search pattern : {}".format(pattern))
+    print('-' * max(pattern_length, 50))
+    print('-' * max(pattern_length, 50))
+    print("Search text : {}".format(text))
+    print('-' * max(pattern_length, 50))
+    print_matches(pattern, text, match(pattern, text))
 
 
 def print_usage():
