@@ -60,6 +60,11 @@ def match(pattern, text, next_state=None):
 
 def print_matches(pattern, text, matcher):
     pattern_length = len(pattern)
+    print('-' * max(pattern_length, 50))
+    print("Search pattern : {}".format(pattern))
+    print('-' * max(pattern_length, 50))
+    print("Search text : {}".format(text))
+    print('-' * max(pattern_length, 50))
     for num_shifts in matcher:
         print(text)
         print(' '*num_shifts + '^'*pattern_length)  # Prints '^' under matches.
@@ -84,15 +89,10 @@ def test():
     next_state[7]['C'] = 2
 
     text = "GTAACACAGAACACAGACGA"
-    # print_matches(pattern, text, match(pattern, text, next_state))
+    print_matches(pattern, text, match(pattern, text))
 
-    pattern_length = len(pattern)
-    print('-' * max(pattern_length, 50))
-    print("Search pattern : {}".format(pattern))
-    print('-' * max(pattern_length, 50))
-    print('-' * max(pattern_length, 50))
-    print("Search text : {}".format(text))
-    print('-' * max(pattern_length, 50))
+    pattern = "football"
+    text = "luis enrique the footballer"
     print_matches(pattern, text, match(pattern, text))
 
 
