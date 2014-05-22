@@ -25,8 +25,10 @@ import numpy as np
 
 
 def print_schedule(jobs):
-    for start, end in jobs:
-        print(' '*(start+3) + '({})'.format(start) + '|' +
+    print("Job")
+    print('-' * 20)
+    for i, (start, end) in enumerate(jobs):
+        print("({})".format(i) + ' '*(start+3) + '({})'.format(start) + '|' +
               '-'*(end - start - 1) + '|' + "({})".format(end))
         print("")
 
@@ -97,7 +99,6 @@ def main():
     # values = [1, 2, 3]
     jobs = sorted(jobs, key=lambda x: x[1])  # Sort according to finishing time.
     print('-' * 20)
-    print("Schedule:")
     print_schedule(jobs)
 
     # p = compute_p(jobs)
@@ -112,7 +113,7 @@ def main():
     print(A)
     print('-' * 20)
     solution = solve(jobs, values, A, p)
-    print("Solution: ")
+    print("Solution (indices of jobs): ")
     print(solution)
 
 
