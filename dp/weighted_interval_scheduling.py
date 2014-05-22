@@ -44,7 +44,7 @@ def search(jobs, start, i):
 def compute_p(jobs):
     """Computes index of latest finished job that does not overlap with a job."""
     n = len(jobs)
-    p = np.zeros(n, dtype=np.uint)
+    p = np.zeros(n, dtype=np.int)
     for i in range(n):
         start_i = jobs[i][0]
         # Start searching from previous job.
@@ -74,24 +74,27 @@ def compute_WIS_table(jobs, values):
         # Exclude ith job: A[i-1]
         A[i] = max(values[i-1] + A[p[i-1]], A[i-1])
 
-    return A
+    return A, p
 
 
-def solve(jobs, values, A):
+def solve(jobs, values, A, p):
     solution = []
     n = len(A) - 1
     while n > 0:
-        if A[n] - values[n-1] >= A[n-1]:
-            solution.append(jobs[n-1])
-
-        n -= 1
+        if A[n] > A[n-1]:
+            solution.append(n-1)
+            n = p[n-1]
+        else:
+            n -= 1
 
     return solution
 
 
 def main():
-    jobs = [(1, 3), (2, 4), (5, 7)]
-    values = [1, 2, 3]
+    jobs = [(6, 11), (7, 12), (12, 17), (14, 19)]
+    values = [5, 6, 5, 1]
+    # jobs = [(1, 3), (2, 4), (5, 7)]
+    # values = [1, 2, 3]
     jobs = sorted(jobs, key=lambda x: x[1])  # Sort according to finishing time.
     print('-' * 20)
     print("Schedule:")
@@ -100,12 +103,15 @@ def main():
     # p = compute_p(jobs)
     # print("")
     # print(p)
-    A = compute_WIS_table(jobs, values)
+    A, p = compute_WIS_table(jobs, values)
+    print('-' * 20)
+    print("values:")
+    print(values)
     print('-' * 20)
     print("Table:")
     print(A)
     print('-' * 20)
-    solution = solve(jobs, values, A)
+    solution = solve(jobs, values, A, p)
     print("Solution: ")
     print(solution)
 
