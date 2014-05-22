@@ -19,6 +19,12 @@ def build_next_state_table(pattern, charset):
     m = len(pattern)
     next_state = [defaultdict(int) for _ in range(m + 1)]
 
+    prefix = ''
+    for k, c in enumerate(pattern):
+        for a in charset:
+            pass
+            next_state[k+1]
+
     return next_state
 
 
@@ -27,22 +33,22 @@ def match(pattern, text, next_state=None):
         charset = set(text.split())
         next_state = build_next_state_table(pattern, charset)
 
-    m = len(pattern)
+    pattern_length = len(pattern)
     state = 0
-    for i, c in enumerate(text, 1):
-        state = next_state[state][c]
-        if state == m:
-            yield i - m
+    for i, token in enumerate(text, 1):
+        state = next_state[state][token]
+        if state == pattern_length:  # Reached end of pattern, i.e., match found.
+            yield i - pattern_length  # Number of chars from beginning of text.
 
 
 def print_matches(pattern, text, matcher):
-    m = len(pattern)
-    print('-' * max(m, 50))
+    pattern_length = len(pattern)
+    print('-' * max(pattern_length, 50))
     print("Search pattern : {}".format(pattern))
-    print('-' * max(m, 50))
-    for i in matcher:
+    print('-' * max(pattern_length, 50))
+    for num_shifts in matcher:
         print(text)
-        print(' '*i + '^'*m)
+        print(' '*num_shifts + '^'*pattern_length)
 
 
 def test():
