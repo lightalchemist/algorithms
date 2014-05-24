@@ -11,7 +11,7 @@ def build_table(x, f):
     save_from = [None] * n
     # save_from = [-1] * n
     for i in range(2, n):
-        # Detonate at time i
+        # activate at time i
         # Max monster we can kill at time i is
         # max of max monster we can kill at time j, A[j],
         # + monsters we can kill at time i after saving up
@@ -24,8 +24,8 @@ def build_table(x, f):
         max_kills_at_i = possible_kills[idx]
         save_from[i] = idx  # To achieve max kills at time i, start save from idx
 
-        A[i] = max(A[i-1],  # Don't detonate at time i, max kill as 1 step earlier
-                   max_kills_at_i) # Detonate at time i.
+        A[i] = max(A[i-1],  # Don't activate at time i, max kill as 1 step earlier
+                   max_kills_at_i) # activate at time i.
 
     return A, save_from
 
@@ -34,20 +34,26 @@ def assemble(x, f, A, save_from):
     i = len(x)
     solution = [None] * (len(x) + 1)
     while i > 0:
-        if A[i] > A[i-1]:  # Detonated at time i
-            solution[i] = "Detonate"
+        if A[i] > A[i-1]:  # activated at time i
+            # print("Time {} activate".format(i))
+            solution[i] = "Activate"
             # Save up from save_from[i]
             if save_from[i] is not None:
-                solution[save_from[i]:i] = ["Don't detonate"] * (i - save_from[i])
+                # print("Saved from time {}".format(save_from[i]))
+                solution[save_from[i]:i] = ["Don't activate"] * (i - save_from[i])
+            # else:
+                # print("Begin from drained.")
             i = save_from[i]
         else:
-            solution[i] = "Don't detonate"
+            solution[i] = "Don't activate"
             i -= 1
 
     return solution[1:]
 
 
 def print_solution(solution):
+    print("")
+    print("Solution")
     for i, x in enumerate(solution, 1):
         print("Time {}: {}".format(i, x))
 
@@ -57,14 +63,16 @@ def main():
     f = [3]
     x = [1, 10, 10, 1]
     f = [1, 2, 4, 8]
+    # x = [2, 2, 7]
+    # f = [2, 5, 6]
     A, save_from = build_table(x, f)
-    print(A)
-    print(save_from)
+    print("A: {}".format(A))
+    # print("save_from: {}".format(save_from))
 
     print("x: {}".format(x))
     print("f: {}".format(f))
     solution = assemble(x, f, A, save_from)
-    print(solution)
+    # print(solution)
     print_solution(solution)
 
 
