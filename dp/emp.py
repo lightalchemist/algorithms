@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+"""
+File: emp.py
+Author: Hong-Wei Ng
+Email: lightalchemist@gmail.com
+Github: https://github.com/lightalchemist
+Description: Solution to chap 6 ex8 of Algorithm Design book
+by Jon Kleinberg and Eva Tardos.
+"""
 
 import numpy as np
 
