@@ -65,6 +65,8 @@ def main():
     f = [1, 2, 4, 8]
     # x = [2, 2, 7]
     # f = [2, 5, 6]
+    x = [3, 10, 4, 8, 20, 10]
+    f = [1, 4, 6, 8, 10, 15]
     A, save_from = build_table(x, f)
     print("A: {}".format(A))
     # print("save_from: {}".format(save_from))
@@ -72,8 +74,8 @@ def main():
     print("x: {}".format(x))
     print("f: {}".format(f))
     solution = assemble(x, f, A, save_from)
-    # print(solution)
     print_solution(solution)
+    print("Total destroyed: {}".format(A[-1]))
 
 
 if __name__ == '__main__':
