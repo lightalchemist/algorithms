@@ -19,15 +19,15 @@ import numpy as np
 
 LARGE_NUM = np.inf
 def compute_lcost(words, wl, max_char_per_line):
-    """lcost[i][j] is cost of having word i to word j (inclusive) in
+    """lcost[i][j] is cost of having ith to jth word (inclusive) in
     a single line.
     TODO: Speed this up.
     """
     n = len(words) + 1
     lcost = np.zeros((n, n))
     for i in range(1, n):
-        for j in range(i, n):
-            num_chars = sum(wl[i-1:j]) + (j - i)
+        for j in range(i, n):  # jth word can be ith word or any word that comes after it.
+            num_chars = sum(wl[i-1:j]) + (j - i)  # Num chars in words + single space between them.
             lcost[i][j] = ((num_chars - max_char_per_line)**2  # Penalty
                            if num_chars <= max_char_per_line  # if satisfy constraint.
                            else LARGE_NUM)  # Disallow constraint to be violated.
@@ -61,7 +61,7 @@ def build_table(words, max_char_per_line):
     A = np.zeros(len(words) + 1)
     for j in range(1, len(words) + 1):
         # Cost to format j words is opt cost to format up to
-        # (i-1)th word A[i-1] + cost to have ith to jth word (lcost_ij) in a
+        # (i-1)th word (A[i-1]) + cost to have ith to jth word (lcost_ij) in a
         # single line.
         A[j] = min(A[i-1] + lcost[i][j] for i in range(1, j+1))
 
@@ -69,21 +69,24 @@ def build_table(words, max_char_per_line):
 
 
 def assemble(words, A, lcost):
-    sentences = []
+    lines = []
     n = len(words)
     while n > 0:
-        i = np.argmin(np.asarray([A[k-1] + lcost[k][n] for k in range(1, n+1)]))
-        sentences.insert(0, " ".join(words[i:n]))  # Word i to word n-1 form a sentence.
-        n -= (n - i)  # Less (n - i) number of words.
+        k = np.argmin([A[i-1] + lcost[i][n]  # Find word k to start new line from
+                       for i in range(1, n+1)])  # starting with 1st word to current last.
+        lines.insert(0, " ".join(words[k:n]))  # Word k to word n-1 form a line.
+        n -= (n - k)  # Less (n - k) words from line we just processed.
 
-    return '\n'.join(sentences)
+    return '\n'.join(lines)
 
 
 def format(paragraph, max_char_per_line):
+    """Format a paragraph given the max number of allowed characters per line.
+    """
     words = paragraph.split()
     wl = map(len, words)
-    lcost = compute_lcost(words, wl, max_char_per_line)
     A = build_table(words, max_char_per_line)
+    lcost = compute_lcost(words, wl, max_char_per_line)
     formatted = assemble(words, A, lcost)
     return formatted
 
@@ -107,12 +110,18 @@ ambassador of Japan in Washington is reportedly "very, very confused."
 '''
 
 def test():
-    words = para1.split()
     max_char_per_line = 79
-    wl = map(len, words)
-    lcost = compute_lcost(words, wl, max_char_per_line)
-    A = build_table(words, max_char_per_line)
-    formatted = assemble(words, A, lcost)
+    formatted = format(para1, max_char_per_line)
+    lines = formatted.split('\n')
+    line_lengths = map(len, lines)
+    print(line_lengths)
+    print(formatted)
+
+    print("")
+    formatted = format(para2, max_char_per_line)
+    lines = formatted.split('\n')
+    line_lengths = map(len, lines)
+    print(line_lengths)
     print(formatted)
 
 
