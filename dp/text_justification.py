@@ -59,21 +59,25 @@ def build_table(words, max_char_per_line):
     wl = map(len, words)  # Word lengths
     lcost = compute_lcost(words, wl, max_char_per_line)
     A = np.zeros(len(words) + 1)
+    # parent = np.zeros(len(words) + 1, dtype=np.int)
+    parent = np.zeros(len(words) + 1, dtype=np.int)
     for j in range(1, len(words) + 1):
-        # Cost to format j words is opt cost to format up to
+        # Cost to format up to word j is opt cost to format up to
         # (i-1)th word (A[i-1]) + cost to have ith to jth word (lcost_ij) in a
         # single line.
-        A[j] = min(A[i-1] + lcost[i][j] for i in range(1, j+1))
+        costs = [A[i-1] + lcost[i][j] for i in range(1, j+1)]
+        i = np.argmin(costs)  # Start of new line
+        A[j] = costs[i]
+        parent[j] = i  # Line ending with word j starts from word i (inclusive).
 
-    return A
+    return A, parent
 
 
-def assemble(words, A, lcost):
+def assemble(words, parent):
     lines = []
     n = len(words)
     while n > 0:
-        k = np.argmin([A[i-1] + lcost[i][n]  # Find word k to start new line from
-                       for i in range(1, n+1)])  # starting with 1st word to current last.
+        k = parent[n]
         lines.insert(0, " ".join(words[k:n]))  # Word k to word n-1 form a line.
         n -= (n - k)  # Less (n - k) words from line we just processed.
 
@@ -81,13 +85,11 @@ def assemble(words, A, lcost):
 
 
 def justify(paragraph, max_char_per_line):
-    """Format a paragraph given the max number of allowed characters per line.
+    """Justify a paragraph given the max number of allowed characters per line.
     """
     words = paragraph.split()
-    wl = map(len, words)
-    A = build_table(words, max_char_per_line)
-    lcost = compute_lcost(words, wl, max_char_per_line)
-    formatted = assemble(words, A, lcost)
+    A, parent = build_table(words, max_char_per_line)
+    formatted = assemble(words, parent)
     return formatted
 
 
