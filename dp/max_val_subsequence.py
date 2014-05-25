@@ -14,50 +14,56 @@ in the given sequence.
 import numpy as np
 
 
-DIS = 0
-INC = 1
 def build_table(values):
     n = len(values)
-    A = np.zeros((n + 1, 2))
-    # parent = np.zeros(n + 1, dtype=np.int)
+    A = np.zeros(n + 1)
+    parent = [None] * (n + 1)
+    parent[0] = 1
     for i in range(1, n + 1):
-        A[i][DIS] = max(A[i-1, :])
-        A[i][INC] = max(values[i-1],
-                        A[i-1, INC] + values[i-1])
-        # if A[i-1] + values[i-1]
-        # A[i] = max(A[i-1],
-        #            A[i-1] + values[i-1]
-        #            )
-
-    return A
-
-
-def assemble(values, A):
-    n = len(values)
-    solutions = [None] * (n + 1)
-    s = INC if A[n][INC] > A[n][DIS] else DIS
-    max_val = A[n][s]
-    while n > 0:
-        if s == INC:
-            solutions[n] = "include"
-            max_val -= values[n-1]
+        if values[i-1] > A[i-1] + values[i-1]:
+            A[i] = values[i-1]
+            parent[i] = i
         else:
-            solutions[n] = "discard"
+            A[i] = A[i-1] + values[i-1]
+            parent[i] = parent[i-1]
 
-        s = DIS if A[n-1][DIS] == max_val else INC
-        n -= 1
+    return A, parent
 
-    return solutions[1:]
+def assemble(values, A, parent):
+    j = np.argmax(A)
+    return (parent[j], j), values[parent[j]-1:j]
+
+
+def max_val_subsequence(values):
+    A, parent = build_table(values)
+    idxs, subsequence = assemble(values, A, parent)
+    return subsequence
 
 
 def main():
-    # values = [2, 3, -1, 4, -3]
-    values = [2, 3, -4, 4, -3]
-    A = build_table(values)
-    print(values)
-    print(A)
-    solutions = assemble(values, A)
-    print(solutions)
+    values = [2, 3, -1, 4, -3]
+    subsequence = max_val_subsequence(values)
+    assert subsequence == [2, 3, -1, 4]
+
+    values = [2, 3, -3, 4, -3]
+    subsequence = max_val_subsequence(values)
+    assert subsequence == [2, 3, -3, 4]
+
+    values = [-2]
+    subsequence = max_val_subsequence(values)
+    assert subsequence == []
+
+    values = [3, -1]
+    subsequence = max_val_subsequence(values)
+    assert subsequence == [3]
+
+    values = [1, -2]
+    subsequence = max_val_subsequence(values)
+    assert subsequence == [1]
+
+    values = [1, -2, 5, -6, 10]
+    subsequence = max_val_subsequence(values)
+    assert subsequence == [10]
 
 
 if __name__ == '__main__':
