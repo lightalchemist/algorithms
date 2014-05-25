@@ -102,6 +102,7 @@ def test():
     X, Y = "tom hanks is sam", "tom cruise robs bank"
     X, Y = "gold digger", "rube goldberg"
     X, Y = "will smith in mib", "smithsonian museums"
+    X, Y = "mean", "name"
 
     align(X, Y, gap_cost, MISMATCH_COST)
 
