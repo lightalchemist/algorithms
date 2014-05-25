@@ -8,9 +8,9 @@ Github: https://github.com/lightalchemist
 Description: Solution to chap 6 ex 6 of Algorithm Design book
 by Jon Kleinberg and Eva Tardos.
 
-This code uses DP to format a paragraph of text to ensure that
-the lines are split such that each line has characters less than a given
-number max_char_per_line and overall the lines are as close to
+This code uses DP to justify a paragraph of text.
+The paragraph is formatted such that each line has characters less than a
+given number max_char_per_line and overall the lines are as close to
 max_char_per_line as possible.
 """
 
@@ -80,7 +80,7 @@ def assemble(words, A, lcost):
     return '\n'.join(lines)
 
 
-def format(paragraph, max_char_per_line):
+def justify(paragraph, max_char_per_line):
     """Format a paragraph given the max number of allowed characters per line.
     """
     words = paragraph.split()
@@ -111,14 +111,14 @@ ambassador of Japan in Washington is reportedly "very, very confused."
 
 def test():
     max_char_per_line = 79
-    formatted = format(para1, max_char_per_line)
+    formatted = justify(para1, max_char_per_line)
     lines = formatted.split('\n')
     line_lengths = map(len, lines)
     print(line_lengths)
     print(formatted)
 
     print("")
-    formatted = format(para2, max_char_per_line)
+    formatted = justify(para2, max_char_per_line)
     lines = formatted.split('\n')
     line_lengths = map(len, lines)
     print(line_lengths)
