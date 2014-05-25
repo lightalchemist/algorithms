@@ -79,6 +79,7 @@ def compute_WIS_table(jobs, values):
     return A, p
 
 
+# def assemble_solution(jobs)
 def solve(jobs, values, A, p):
     solution = []
     n = len(A) - 1
