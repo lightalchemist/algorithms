@@ -9,6 +9,8 @@ Description: Computes the maximum value contiguous subsequence
 of a given sequence of numbers.
 Note that this problem is only interesting if there are negative values
 in the given sequence.
+
+Problem taken from: http://people.cs.clemson.edu/~bcdean/dp_practice/dp_1.swf
 """
 
 import numpy as np
