@@ -28,7 +28,7 @@ def compute_lcost(words, wl, max_char_per_line):
     for i in range(1, n):
         for j in range(i, n):  # jth word can be ith word or any word that comes after it.
             num_chars = sum(wl[i-1:j]) + (j - i)  # Num chars in words + single space between them.
-            lcost[i][j] = ((num_chars - max_char_per_line)**2  # Penalty
+            lcost[i][j] = ((max_char_per_line - num_chars)**2  # Penalty
                            if num_chars <= max_char_per_line  # if satisfy constraint.
                            else LARGE_NUM)  # Disallow constraint to be violated.
 
