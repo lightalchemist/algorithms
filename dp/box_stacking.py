@@ -14,17 +14,28 @@ import numpy as np
 
 
 def build_table(widths, depths, heights):
+    """A[i] is max possible height with box i at the top."""
     n = len(widths)
     A = np.zeros(n + 1)
     areas = [w * d for (w, d) in zip(widths, depths)]
+    # Sort according to area in descending order
     order = sorted(range(n), key=lambda x: areas[x], reverse=True)
     parents = np.zeros(n + 1, dtype=np.int)
 
-    for i in range(1, n+1):
+    # For each box i
+    # We are basically searching for all possible box j as base for box i
+    # Max height is then max height with box j as top + height of box i.
+    # Special case when we don't use any box as base for box i (i.e. j == 0) so
+    # height is just height of box i.
+    for i in range(1, n+1):  # For each box i
         possible_heights = []
-        for j in range(i):  # All boxes that could be a base
-            if j == 0:  # First box
-                possible_heights.append(heights[order[i-1]])
+        # All boxes that could potentially be base of box i (i.e. has area < area of box i).
+        for j in range(i):  # For each possible base j for box i
+            # order[i-1] is idx of box arranged in order of size of area.
+            # idea is that if area_i < area_j, then box i can never be base of box j
+            # since at least 1 side will not satisfy the necessary constraints.
+            if j == 0:  # Box i is first box
+                possible_heights.append(heights[order[i-1]])  # Just height of box i.
             elif (widths[order[i-1]] < widths[order[j-1]] and
                   depths[order[i-1]] < depths[order[j-1]]):
                 possible_heights.append(A[j] + heights[order[i-1]])
