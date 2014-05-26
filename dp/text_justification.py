@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-File: line_formatting.py
+File: text_justification.py
 Author: Hong-Wei Ng
 Email: lightalchemist@gmail.com
 Github: https://github.com/lightalchemist
