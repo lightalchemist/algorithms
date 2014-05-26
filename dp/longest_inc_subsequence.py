@@ -21,13 +21,10 @@ def build_table(seq):
     # Parent of first char in seq is itself.
     parent[1] = 1
     for i in range(2, n+1):  # Max inc subsequence length ending at ith position.
-        # possible = []
-        possible = [(1 + A[j], j) if seq[i-1] > seq[j-1] else (1, i) for j in range(i)]
-        # for j in range(i):  # Starting from jth position
-        #     if seq[i-1] > seq[j-1]:
-        #         possible.append((1 + A[j], j))
-        #     else:
-        #         possible.append((1, i))
+        # Possible len of subsequences starting at position j ending at position i if conditions satistified.
+        possible = [(1 + A[j], j) if seq[i-1] > seq[j-1]  # Max len is 1 + A[j] starting at position j
+                    else (1, i)  # Max len is 1 with subsequence just char i
+                    for j in range(i)]  # For each starting position j
 
         A[i], parent[i] = max(possible)
 
@@ -37,7 +34,8 @@ def build_table(seq):
 def assemble(seq, A, parent):
     subsequence_length = int(np.max(A))
     solution = [None] * (subsequence_length)
-    i = np.argmax(A)
+    i = np.argmax(A)  # Idx of last char in seq.
+    # Backtrack from last char.
     for j in range(subsequence_length-1, -1, -1):
         solution[j] = seq[i-1]
         i = parent[i]
@@ -53,20 +51,22 @@ def longest_inc_subsequence(seq):
 
 def main():
     s = [7, 2, 3, 1, 5, 8, 9, 6]
-    solution = [2, 3, 5, 8, 9]
 
     solution = longest_inc_subsequence(s)
     print("seq: {}".format(s))
+    assert solution == [2, 3, 5, 8, 9]
     print(solution)
 
     s = [3, -1]
     solution = longest_inc_subsequence(s)
     print("seq: {}".format(s))
+    assert solution == [3]
     print(solution)
 
     s = [-1]
     solution = longest_inc_subsequence(s)
     print("seq: {}".format(s))
+    assert solution == [-1]
     print(solution)
 
 
