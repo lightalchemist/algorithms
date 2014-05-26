@@ -12,6 +12,7 @@ import numpy as np
 
 
 def build_table(total, start, end):
+    """A[t] is max profit made if we invested amount t at the start."""
     A = np.zeros(total + 1, dtype=np.int)
     invested = np.zeros(total + 1, dtype=np.int)
     for t in range(1, total+1):
@@ -19,9 +20,9 @@ def build_table(total, start, end):
         for i, (s, e) in enumerate(zip(start, end)):
             profit = e-s
             if t >= s:
-                possible.append((A[t-s] + profit, i))  # Buy stock i
+                possible.append((A[t-s] + profit, i))  # Buy stock i at cost s
             else:
-                possible.append((t, -1))
+                possible.append((t, -1))  # Not enough to buy. Keep t.
 
         A[t], invested[t] = max(possible)
 
