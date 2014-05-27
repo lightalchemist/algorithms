@@ -24,7 +24,7 @@ def build_table(seq):
         # Possible len of subsequences starting at position j ending at position i if conditions satistified.
         possible = [(1 + A[j], j) if seq[i-1] > seq[j-1]  # Max len is 1 + A[j] starting at position j
                     else (1, i)  # Max len is 1 with subsequence just char i
-                    for j in range(i)]  # For each starting position j
+                    for j in range(1, i)]  # For each starting position j
 
         A[i], parent[i] = max(possible)
 
