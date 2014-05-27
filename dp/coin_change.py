@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+"""
+File: coin_change.py
+Author: Hong-Wei Ng
+Email: lightalchemist@gmail.com
+Github: https://github.com/lightalchemist
+Description: Determine fewest coins from a given set of denominations
+needed to provide change for an amount C.
+"""
+
+
 import numpy as np
 
 
