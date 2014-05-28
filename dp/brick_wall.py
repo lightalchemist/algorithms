@@ -38,6 +38,7 @@ There are 2 patterns for a wall of length 2:
 
 There are three patterns for walls of length 3.
 
+Actually solution is just the fibonacci number fib(length)
 """
 
 
