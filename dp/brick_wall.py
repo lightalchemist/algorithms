@@ -51,7 +51,12 @@ def build_table(length):
     A[1] = 1  # 1 way to have wall of length 1
     # This is just fibonnaci sequence
     for i in range(2, length+1):
-        A[i] = np.sum(A[i-j] for j in (1, 2))
+        # Number of ways to have wall of length i
+        # = number of ways to lay a brick of length 1 with number of ways
+        # to build a wall with length (i - 1) +
+        # number of ways to lay a brick of length 2 with number of ways
+        # to build a wall with length (i - 2)
+        A[i] = A[i-1] + A[i-2]
 
     return A
 
