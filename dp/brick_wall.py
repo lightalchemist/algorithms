@@ -69,6 +69,10 @@ def main():
     n = compute_num_patterns(length)
     assert n == 5
 
+    length = 5
+    n = compute_num_patterns(length)
+    assert n == 8
+
 
 if __name__ == '__main__':
     main()
