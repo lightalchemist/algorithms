@@ -35,21 +35,21 @@ def compute_lcost(words, wl, max_char_per_line):
     return lcost
 
 
-def compute_lcost2(words, wl, max_char_per_line):
-    n = len(words) + 1
-    lcost = np.ones((n, n)) * -1
-    # lcost[:, 0] = -1
-    # Error cost for sentence with words wi to wj
-    for i in range(1, n):
-        for j in range(i, n):
-            lcost[i][j] = lcost[i][j-1] + 1 + wl[j-1]
-
-    lcost = (lcost - max_char_per_line)**2
-    lcost[0, :] = 0
-    lcost[:, 0] = 0
-    lcost[np.tril_indices(lcost.shape[0], -1)] = 0
-
-    return lcost
+# def compute_lcost2(words, wl, max_char_per_line):
+#     n = len(words) + 1
+#     lcost = np.ones((n, n)) * -1
+#     # lcost[:, 0] = -1
+#     # Error cost for sentence with words wi to wj
+#     for i in range(1, n):
+#         for j in range(i, n):
+#             lcost[i][j] = lcost[i][j-1] + 1 + wl[j-1]
+#
+#     lcost = (lcost - max_char_per_line)**2
+#     lcost[0, :] = 0
+#     lcost[:, 0] = 0
+#     lcost[np.tril_indices(lcost.shape[0], -1)] = 0
+#
+#     return lcost
 
 
 def build_table(words, max_char_per_line):
