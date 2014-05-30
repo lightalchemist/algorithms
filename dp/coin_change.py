@@ -19,7 +19,7 @@ def build_table(denominations, C):
     C is value we want to change for using coins with values
     in denominations.
 
-    used_coin[i] is actual denomination used for value of i.
+    used_coin[i] is denomination used to get value of i.
     """
     A = np.zeros(C + 1, dtype=np.int)
     used_coin = np.zeros(C+1, dtype=np.int)
@@ -44,7 +44,8 @@ def assemble(C, used_coin):
 
 
 def print_solution(coins):
-    print("Total number of coins required: {}".format(sum(coins.denominations())))
+    print("Minimum number of coins required: {}".format(
+        sum(coins.values())))
     print('-' * 40)
     for value, count in coins.items():
         print("{} x {}".format(count, value))
@@ -57,6 +58,7 @@ def main():
     A, used_coin = build_table(denominations, C)
 
     print("Change: {}".format(C))
+    print("Denominations: {}".format(denominations))
     coins = assemble(C, used_coin)
     coins = Counter(coins)
     print_solution(coins)
