@@ -54,7 +54,7 @@ def num_ways_make_change(n, total, D):
                 num_ways_make_change(n, total-dn, D))
 
 
-def build_table(D, total):
+def build_table(total, D):
     nd = len(D)
     A = np.zeros((nd+1, total+1))
     A[1:, 0] = 1  # 1 way to change for 0 using any number of coins
@@ -73,7 +73,7 @@ def build_table(D, total):
 def main():
     denominations = [1, 2]
     total = 3
-    A = build_table(denominations, total)
+    A = build_table(total, denominations)
     num_ways = A[len(denominations), total]
     assert num_ways == 2
     print("Number of ways to change {} using denominations {}:"
@@ -83,10 +83,9 @@ def main():
                                     denominations)
     print(num_ways)
 
-
     denominations = [1, 2, 5]
     total = 10
-    A = build_table(denominations, total)
+    A = build_table(total, denominations)
     num_ways = A[len(denominations), total]
     assert num_ways == 10
     print("Number of ways to change {} using denominations {}:"
@@ -98,7 +97,7 @@ def main():
 
     denominations = [1, 5, 10, 25, 50]
     total = 11
-    A = build_table(denominations, total)
+    A = build_table(total, denominations)
     num_ways = A[len(denominations), total]
     assert num_ways == 4
     print("Number of ways to change {} using denominations {}:"
