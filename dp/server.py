@@ -17,10 +17,11 @@ If a file is requested from si and the file is not found, then a search
 will have to be performed from servers s_i+1 onwards. If the file is then
 found at server j, where j > i, then the search cost is (j-i).
 
-sn always has a copy of the file.
+Server sn always has a copy of the file.
 
-Find the optimimum strategy, i.e., whether to place a file at any of the servers,
-so as to minimize the total placement and search costs.
+Find the optimimum strategy, i.e., which servers to place a copy of the file at,
+so as to minimize the total placement and search costs if the file were to be
+requested from each of the servers.
 
 """
 
