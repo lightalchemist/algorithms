@@ -10,8 +10,35 @@ for an amount "total" given a set of denominations.
 """
 
 import pdb
+from functools import update_wrapper
 import numpy as np
 
+
+def decorator(d):
+    def _d(fn):
+        return update_wrapper(d(fn), fn)
+
+    update_wrapper(_d, d)
+    return _d
+
+
+@decorator
+def memo(f):
+    cache = {}
+    def _f(*args, **kwargs):
+        try:
+            result = cache[args]
+            return result
+        except KeyError:
+            cache[args] = result = f(*args)
+            return result
+        except TypeError:
+            return f(*args)
+
+    return _f
+
+
+@memo
 def num_ways_make_change(n, C, D):
     if n == 0:
         return 0
