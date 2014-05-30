@@ -7,6 +7,8 @@ Email: lightalchemist@gmail.com
 Github: https://github.com/lightalchemist
 Description: Use DP to solve box stacking problem given in link below.
 http://people.cs.clemson.edu/~bcdean/dp_practice/dp_5.swf
+
+This solution is wrong as it does not take into account possible rotations...
 """
 
 
