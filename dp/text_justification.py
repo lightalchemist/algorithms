@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
 File: text_justification.py
@@ -59,7 +60,6 @@ def build_table(words, max_char_per_line):
     wl = map(len, words)  # Word lengths
     lcost = compute_lcost(words, wl, max_char_per_line)
     A = np.zeros(len(words) + 1)
-    # parent = np.zeros(len(words) + 1, dtype=np.int)
     parent = np.zeros(len(words) + 1, dtype=np.int)
     for j in range(1, len(words) + 1):
         # Cost to format up to word j is opt cost to format up to
