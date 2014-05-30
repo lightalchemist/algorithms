@@ -16,6 +16,8 @@ Placing a file at server i cost a value of ci.
 If a file is requested from si and the file is not found, then a search
 will have to be performed from servers s_i+1 onwards. If the file is then
 found at server j, where j > i, then the search cost is (j-i).
+No search cost is incurred if we request the file from si if a copy of the
+file was placed there.
 
 Server sn always has a copy of the file.
 
