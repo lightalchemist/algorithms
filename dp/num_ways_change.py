@@ -57,6 +57,13 @@ def num_ways_make_change(n, amount, D):
 
 
 def build_table(amount, D):
+    """A[i, v] stores number of ways to change amount v using
+    first i coins. Solution is A[n, amount] where n is number of
+    denominations, and "amount" is amount to change. This reads as
+    number of ways to change amount using n coins.
+
+    D is list of denominations.
+    """
     nd = len(D)
     A = np.zeros((nd+1, amount+1))
     A[1:, 0] = 1  # 1 way to change for 0 using any number of coins
