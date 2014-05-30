@@ -12,6 +12,20 @@ for an amount "total" given a set of denominations.
 import pdb
 import numpy as np
 
+def num_ways_make_change(n, C, D):
+    if n == 0:
+        return 0
+
+    if C == 0:
+        return 1
+
+    dn = D[n-1]
+    if dn > C:
+        return num_ways_make_change(n-1, C, D)
+    else:
+        return (num_ways_make_change(n-1, C, D) +
+                num_ways_make_change(n, C-dn, D))
+
 
 def build_table(D, total):
     nd = len(D)
@@ -37,6 +51,11 @@ def main():
     assert num_ways == 2
     print("Number of ways to change {} using denominations {}:"
           " {}".format(C, denominations, num_ways))
+    num_ways = num_ways_make_change(len(denominations),
+                                    C,
+                                    denominations)
+    print(num_ways)
+
 
     denominations = [1, 2, 5]
     C = 10
@@ -45,6 +64,10 @@ def main():
     assert num_ways == 10
     print("Number of ways to change {} using denominations {}:"
           " {}".format(C, denominations, num_ways))
+    num_ways = num_ways_make_change(len(denominations),
+                                    C,
+                                    denominations)
+    print(num_ways)
 
     denominations = [1, 5, 10, 25, 50]
     C = 11
@@ -54,6 +77,10 @@ def main():
     print("Number of ways to change {} using denominations {}:"
           " {}".format(C, denominations, num_ways))
     num_ways = A[len(denominations), C]
+    num_ways = num_ways_make_change(len(denominations),
+                                    C,
+                                    denominations)
+    print(num_ways)
 
 
 if __name__ == '__main__':
