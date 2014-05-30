@@ -8,6 +8,20 @@ Email: lightalchemist@gmail.com
 Github: https://github.com/lightalchemist
 Description: Solution to chap 6 ex 12 of Algorithm Design book
 by Jon Kleinberg and Eva Tardos.
+
+There are n servers s1, ..., sn.
+
+Placing a file at server i cost a value of ci.
+
+If a file is requested from si and the file is not found, then a search
+will have to be performed from servers s_i+1 onwards. If the file is then
+found at server j, where j > i, then the search cost is (j-i).
+
+sn always has a copy of the file.
+
+Find the optimimum strategy, i.e., whether to place a file at any of the servers,
+so as to minimize the total placement and search costs.
+
 """
 
 
