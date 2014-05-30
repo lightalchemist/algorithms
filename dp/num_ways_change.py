@@ -39,27 +39,27 @@ def memo(f):
 
 
 @memo
-def num_ways_make_change(n, C, D):
-    if n == 0:
+def num_ways_make_change(n, total, D):
+    if n == 0:  # 0 ways to change any value with 0 coins.
         return 0
 
-    if C == 0:
-        return 1
+    if total == 0:  # 1 way to make 0 change with first n coins
+        return 1  # That is use none of the coins.
 
     dn = D[n-1]
-    if dn > C:
-        return num_ways_make_change(n-1, C, D)
-    else:
-        return (num_ways_make_change(n-1, C, D) +
-                num_ways_make_change(n, C-dn, D))
+    if dn > total:  # Cannot use nth coin.
+        return num_ways_make_change(n-1, total, D)
+    else:  # num ways w/o using nth coin + num ways using nth coin.
+        return (num_ways_make_change(n-1, total, D) +
+                num_ways_make_change(n, total-dn, D))
 
 
 def build_table(D, total):
     nd = len(D)
     A = np.zeros((nd+1, total+1))
-    A[:, 0] = 1
-    for i in range(1, nd+1):
-        for v in range(1, total+1):
+    A[1:, 0] = 1  # 1 way to change for 0 using any number of coins
+    for i in range(1, nd+1):  # Use up to coin i
+        for v in range(1, total+1):  # Change v
             di = D[i-1]
             # pdb.set_trace()
             if di > v:
@@ -72,40 +72,40 @@ def build_table(D, total):
 
 def main():
     denominations = [1, 2]
-    C = 3
-    A = build_table(denominations, C)
-    num_ways = A[len(denominations), C]
+    total = 3
+    A = build_table(denominations, total)
+    num_ways = A[len(denominations), total]
     assert num_ways == 2
     print("Number of ways to change {} using denominations {}:"
-          " {}".format(C, denominations, num_ways))
+          " {}".format(total, denominations, num_ways))
     num_ways = num_ways_make_change(len(denominations),
-                                    C,
+                                    total,
                                     denominations)
     print(num_ways)
 
 
     denominations = [1, 2, 5]
-    C = 10
-    A = build_table(denominations, C)
-    num_ways = A[len(denominations), C]
+    total = 10
+    A = build_table(denominations, total)
+    num_ways = A[len(denominations), total]
     assert num_ways == 10
     print("Number of ways to change {} using denominations {}:"
-          " {}".format(C, denominations, num_ways))
+          " {}".format(total, denominations, num_ways))
     num_ways = num_ways_make_change(len(denominations),
-                                    C,
+                                    total,
                                     denominations)
     print(num_ways)
 
     denominations = [1, 5, 10, 25, 50]
-    C = 11
-    A = build_table(denominations, C)
-    num_ways = A[len(denominations), C]
+    total = 11
+    A = build_table(denominations, total)
+    num_ways = A[len(denominations), total]
     assert num_ways == 4
     print("Number of ways to change {} using denominations {}:"
-          " {}".format(C, denominations, num_ways))
-    num_ways = A[len(denominations), C]
+          " {}".format(total, denominations, num_ways))
+    num_ways = A[len(denominations), total]
     num_ways = num_ways_make_change(len(denominations),
-                                    C,
+                                    total,
                                     denominations)
     print(num_ways)
 
