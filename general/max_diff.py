@@ -48,40 +48,40 @@ def compute_max_diff(S):
 
 def test():
     S = [3, 1, 5]
-    d, b, s = compute_max_diff(S)
+    d, i, j = compute_max_diff(S)
     assert d == 4
-    assert b == 1
-    assert s == 2
+    assert i == 1
+    assert j == 2
 
     S = [4, 1, 2, 5]
-    d, b, s = compute_max_diff(S)
+    d, i, j = compute_max_diff(S)
     assert d == 4
-    assert b == 1
-    assert s == 3
+    assert i == 1
+    assert j == 3
 
     S = [-10, 3, 3, 1]
-    d, b, s = compute_max_diff(S)
+    d, i, j = compute_max_diff(S)
     assert d == 13
-    assert b == 0
-    assert s == 1
+    assert i == 0
+    assert j == 1
 
     S = [-1, 2]
-    d, b, s = compute_max_diff(S)
+    d, i, j = compute_max_diff(S)
     assert d == 3
-    assert b == 0
-    assert s == 1
+    assert i == 0
+    assert j == 1
 
     S = [1, 1, 1, 1]
-    d, b, s = compute_max_diff(S)
+    d, i, j = compute_max_diff(S)
     assert d == 0
-    assert b == 0
-    assert s == 1
+    assert i == 0
+    assert j == 1
 
     S = [4, 2, 2, 5, 4, 6, 6]
-    d, b, s = compute_max_diff(S)
+    d, i, j = compute_max_diff(S)
     assert d == 4
-    assert b == 1
-    assert s == 5
+    assert i == 1
+    assert j == 5
 
     assert_raises(ValueError, compute_max_diff, [0, -1, -2])
     assert_raises(ValueError, compute_max_diff, [3])
