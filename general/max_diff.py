@@ -17,7 +17,7 @@ import numpy as np
 from nose.tools import assert_raises
 
 
-def max_diff(S):
+def compute_max_diff(S):
     """Compute max positive difference between 2 elements in a given series of numbers."""
     # Case of 0 or 1 element
     if len(S) <= 1:
@@ -48,44 +48,44 @@ def max_diff(S):
 
 def test():
     S = [3, 1, 5]
-    d, b, s = max_diff(S)
+    d, b, s = compute_max_diff(S)
     assert d == 4
     assert b == 1
     assert s == 2
 
     S = [4, 1, 2, 5]
-    d, b, s = max_diff(S)
+    d, b, s = compute_max_diff(S)
     assert d == 4
     assert b == 1
     assert s == 3
 
     S = [-10, 3, 3, 1]
-    d, b, s = max_diff(S)
+    d, b, s = compute_max_diff(S)
     assert d == 13
     assert b == 0
     assert s == 1
 
     S = [-1, 2]
-    d, b, s = max_diff(S)
+    d, b, s = compute_max_diff(S)
     assert d == 3
     assert b == 0
     assert s == 1
 
     S = [1, 1, 1, 1]
-    d, b, s = max_diff(S)
+    d, b, s = compute_max_diff(S)
     assert d == 0
     assert b == 0
     assert s == 1
 
     S = [4, 2, 2, 5, 4, 6, 6]
-    d, b, s = max_diff(S)
+    d, b, s = compute_max_diff(S)
     assert d == 4
     assert b == 1
     assert s == 5
 
-    assert_raises(ValueError, max_diff, [0, -1, -2])
-    assert_raises(ValueError, max_diff, [3])
-    assert_raises(ValueError, max_diff, [])
+    assert_raises(ValueError, compute_max_diff, [0, -1, -2])
+    assert_raises(ValueError, compute_max_diff, [3])
+    assert_raises(ValueError, compute_max_diff, [])
 
 
 if __name__ == '__main__':
