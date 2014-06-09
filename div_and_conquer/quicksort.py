@@ -54,7 +54,7 @@ def quicksort_helper(A, begin, end):
     quicksort_helper(A, p+1, end)
 
 
-def quicksort(A):
+def sort(A):
     """"Recursive implementation of Quicksort
     to sort an array A in place."""
     quicksort_helper(A, 0, len(A))
@@ -63,38 +63,38 @@ def quicksort(A):
 
 def test():
     S = []
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == []
 
     S = [-1]
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == [-1]
 
     S = [-1, -3]
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == [-3, -1]
 
     S = [2, 2, -1, -1, 3, 10, 100]
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
     S = [2, 3, -1, 0, 5]
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
     S = range(20)
     random.shuffle(S)
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
     S = range(20)
     random.shuffle(S)
     S = [s if random.randint(0, 1) else -s for s in S]
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
     S = range(10)
-    S_sorted = quicksort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
 

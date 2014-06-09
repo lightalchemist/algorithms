@@ -48,7 +48,7 @@ def merge(A, B):
     return C
 
 
-def mergesort(S):
+def sort(S):
     """Implementation of merge sort.
     Time complexity: O(nlogn)
     Space complexity: O(n)
@@ -58,8 +58,8 @@ def mergesort(S):
         return S
 
     mid = len(S) // 2
-    A = mergesort(S[:mid])
-    B = mergesort(S[mid:])
+    A = sort(S[:mid])
+    B = sort(S[mid:])
     S = merge(A, B)
 
     return S
@@ -86,20 +86,20 @@ def test():
     assert C == [1, 2]
 
     S = []
-    S_sorted = mergesort(S)
+    S_sorted = sort(S)
     assert S_sorted == []
 
     S = [2, 2, -1, -1, 3, 10, 100]
-    S_sorted = mergesort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
     S = [2, 3, -1, 0, 5]
-    S_sorted = mergesort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
     S = range(20)
     random.shuffle(S)
-    S_sorted = mergesort(S)
+    S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
 
