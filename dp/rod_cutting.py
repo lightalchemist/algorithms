@@ -34,11 +34,6 @@ def build_table(n, prices):
         possible.append((prices[i-1], i))  # No cut
         A[i], cut_at[i] = max(possible)
 
-
-        # A[i] = max(prices[i-1],  # No cut. Sell at price pi.
-        #            *[prices[j-1] + A[i-j]  # Cut from 1 to just short of i
-        #              for j in range(1, i)])
-
     return A, cut_at
 
 
