@@ -40,21 +40,24 @@ class Node(object):
 
 class LinkedList(object):
 
-    def __init__(self):
+    def __init__(self, items=None):
         self._length = 0
         self._head = None
+        if items is not None:
+            self.insert(items)
 
 
-    def insert(self, n, pos=None):
+    def insert(self, item, pos=None):
         if pos is not None:
             self._check_valid_position(pos, self._length)
         else:  # Default insert at end of linked list
             pos = self._length
 
-        if not isinstance(n, Node):
-            n = Node(n)
+        # if isinstance(item, iterable
+        if not isinstance(item, Node):
+            item = Node(item)
 
-        self._insert(n, pos)
+        self._insert(item, pos)
 
 
     def _insert(self, node, pos):
@@ -62,14 +65,31 @@ class LinkedList(object):
             node.next_element = self._head
             self._head = node
         else:
-            head = self.get_node(pos - 1)  # Get node at position before pos
+            head = self._get_node(pos - 1)  # Get node at position before pos
             node.next_element = head.next_element
             head.next_element = node
 
         self._length += 1
 
 
-    def delete(self, node):
+    def _delete_node_at(self, pos):
+        self._check_valid_position(pos)
+        if pos == 0:
+            self._head = self._head.next_element
+        else:
+            i = 0
+            cur_node = self._head
+            while i != (pos - 1):
+                cur_node = cur_node.next_element
+                i += 1
+
+            node = cur_node.next_element
+            cur_node.next_element = node.next_element
+
+        self._length -= 1
+
+
+    def delete_node(self, node):
         cur_node = self._head
         if node == self._head:
             self._head = self._head.next_element
@@ -85,13 +105,12 @@ class LinkedList(object):
             cur_node.next_element = node.next_element
 
         self._length -= 1
-        assert self._length >= 0
 
 
-    def get_node(self, pos):
+    def _get_node(self, pos):
         self._check_valid_position(pos)
         i = 0
-        cur_node = self.head
+        cur_node = self._head
         while i != pos:
             cur_node = cur_node.next_element
             i += 1
@@ -105,7 +124,7 @@ class LinkedList(object):
 
         if not (0 <= pos <= end):
             raise ValueError("Given pos: {} not within"
-                             "range of linked list.".format(pos))
+                             " range of linked list.".format(pos))
 
 
     @property
@@ -121,6 +140,18 @@ class LinkedList(object):
         raise StopIteration
 
 
+    def __getitem__(self, pos):
+        return self._get_node(pos)
+
+
+    def __setitem__(self, pos, item):
+        self.insert(item, pos)
+
+
+    def __delitem__(self, pos):
+        self._delete_node_at(pos)
+
+
     def __len__(self):
         return self._length
 
@@ -134,35 +165,36 @@ def test():
     a.insert(0)
     assert a.head.value == 0
     assert str(a) == "[0]"
-    assert a.get_node(0).value == 0
+    assert a[0].value == 0
     assert len(a) == 1
 
     a.insert(1)
     assert str(a) == "[0, 1]"
-    assert a.get_node(0).value == 0
-    assert a.get_node(1).value == 1
+    assert a[0].value == 0
+    assert a[1].value == 1
     assert len(a) == 2
 
     a.insert(-1, 0)
     assert a.head.value == -1
     assert str(a) == "[-1, 0, 1]"
-    assert a.get_node(0).value == -1
-    assert a.get_node(1).value == 0
-    assert a.get_node(2).value == 1
+
+    assert a[0].value == -1
+    assert a[1].value == 0
+    assert a[2].value == 1
     assert len(a) == 3
 
-    a.delete(a.head)
+    del a[0]
     assert str(a) == "[0, 1]"
-    assert a.get_node(0).value == 0
+    assert a[0].value == 0
     assert len(a) == 2
 
-    node = a.get_node(1)
+    node = a[1]
     assert node.value == 1
-    a.delete(node)
+    a.delete_node(node)
     assert str(a) == "[0]"
     assert len(a) == 1
 
-    a.delete(a.head)
+    a.delete_node(a.head)
     assert a.head == None
     assert len(a) == 0
 
