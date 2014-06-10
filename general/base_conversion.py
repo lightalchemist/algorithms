@@ -33,6 +33,49 @@ def convert(s, b1, b2):
     char2int, int2char = build_mapping()
     number = 0
     neg = False
+    start = 0
+
+    if s[0] == '-':
+        neg = True
+        start = 1
+
+    # Convert to base 10
+    for i in range(start, len(s)):
+        try:
+            number *= b1
+            number += char2int[s[i]]
+        except KeyError:
+            raise ValueError("String input contains invalid char {}"
+                                " that cannot be converted to int.".format(s[i]))
+
+    # Convert to base b2
+    result = []
+    while number:
+        remainder = number % b2
+        result.append(int2char[remainder])
+        number /= b2
+
+    # Handle negative sign.
+    if result:
+        if neg:
+            result.append('-')
+    else:
+        result.append("0")
+
+    return "".join(reversed(result))
+
+
+def convert2(s, b1, b2):
+    """Convert string representation of a number in base b1
+    to string representation of the number in base b2.
+    s: String representation of number to convert
+    b1: Integer base of s.
+    b2: Base to convert to.
+    2 <= b1, b2 <= 16
+    """
+    char2int, int2char = build_mapping()
+    number = 0
+    neg = False
 
     # Convert to base 10
     for power, i in enumerate(range(len(s) - 1, -1, -1)):
