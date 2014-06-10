@@ -11,7 +11,7 @@ find the longest consecutive sequence that gives the
 maximum sum.
 
 Problem taken from Algorithm Design Manual by Steven Skiena 1st Ed.
-Qn 3-5
+Qn 3-5 pg 78.
 
 E.g. Given S = [31, -41, 59, 26, -53, 58, 97, -93, -23, 84]
 return [59, 26, -53, 58, 97] with sum = 187.
