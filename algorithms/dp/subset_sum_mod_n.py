@@ -13,6 +13,33 @@ modulus n == 0.
 import numpy as np
 
 
+def build_table2(V, n):
+    """A[i][v] = min number of numbers needed to sum to v"""
+    A = np.zeros((len(V) + 1, n + 1), dtype=np.int)
+    for i in range(1, A.shape[0]):
+        for v in range(1, A.shape[1]):
+            if V[i-1] == v:
+                A[i][v] = 1
+            elif V[i-1] > v:  # Cannot use vi
+                A[i][v] = A[i-1][v]
+            else:
+                if A[i-1][v] > 0 and A[i-1][v-V[i-1]] > 0:
+                    A[i][v] = min(A[i-1][v], A[i-1][v - V[i-1]] + 1)
+                elif A[i-1][v] > 0:
+                    A[i][v] = A[i-1][v]
+                else:
+                    A[i][v] = A[i-1][v - V[i-1]]
+
+                # A[i][v] = min(A[i-1][v], A[i-1][v - V[i-1]] + 1)
+
+    return A
+
+
+def assemble2(V, A):
+    m, n = A.shape
+
+
+
 def build_table(V, n):
     """A[i][v] = 1 if first i elements can sum to v."""
 
@@ -23,14 +50,6 @@ def build_table(V, n):
                 A[i][v] = 1  # Use vi
             elif V[i-1] > v and A[i-1][v]:
                 A[i][v] = 1  # Don't use vi
-            # if V[i-1] == v:  # Use vi
-            #     A[i][v] = 1
-            # elif A[i-1][v - V[i-1]] == 1:  # Use vi
-            #     A[i][v] = A[i-1][v - V[i-1]]
-            # elif V[i-1] > v:  # Cannot use vi
-            #     A[i][v] = A[i-1][v]
-            # elif A[i-1][v] == 1:  # Don't use vi
-            #     A[i][v] = A[i-1][v]
             else:  # Don't use vi
                 A[i][v] = 0  # vi not used in subset to v
 
@@ -69,10 +88,12 @@ def solve(X):
 
 def test():
     X = [429, 334, 62, 711, 704, 763, 98, 733, 721, 995]
-    subsets = solve(X)
+    # subsets = solve(X)
     # print(subsets)
-    print([X[i] for i in subsets])
-    assert sum(X[i] for i in subsets) % len(X) == 0
+    # print([X[i] for i in subsets])
+    # assert sum(X[i] for i in subsets) % len(X) == 0
+    A = build_table2(X, len(X))
+    print(A)
 
     # X = [1, 2, 3]
     # A = build_table(X, 1)
