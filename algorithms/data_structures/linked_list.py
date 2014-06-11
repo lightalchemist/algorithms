@@ -44,7 +44,12 @@ class LinkedList(object):
         self._length = 0
         self._head = None
         if items is not None:
-            self.insert(items)
+            self.insert_bulk(items)
+
+
+    def insert_bulk(self, items):
+        for item in items:
+            self.insert(item)
 
 
     def insert(self, item, pos=None):
@@ -53,7 +58,6 @@ class LinkedList(object):
         else:  # Default insert at end of linked list
             pos = self._length
 
-        # if isinstance(item, iterable
         if not isinstance(item, Node):
             item = Node(item)
 
@@ -211,6 +215,17 @@ def test():
     a.insert(3, 2)
     assert str(a) == "[1, 2, 3]"
     assert len(a) == 3
+
+    a= LinkedList([-1])
+    assert str(a) == "[-1]"
+
+    a= LinkedList([1, 2, 3])
+    assert str(a) == "[1, 2, 3]"
+
+    a = LinkedList(set([2, 3]))
+    assert str(a) in ["[2, 3]", "[3, 2]"]
+
+    print("All tests pass.")
 
 
 if __name__ == '__main__':
