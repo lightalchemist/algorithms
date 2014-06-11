@@ -44,10 +44,10 @@ class LinkedList(object):
         self._length = 0
         self._head = None
         if items is not None:
-            self.insert_bulk(items)
+            self._insert_bulk(items)
 
 
-    def insert_bulk(self, items):
+    def _insert_bulk(self, items):
         for item in items:
             self.insert(item)
 
@@ -136,6 +136,14 @@ class LinkedList(object):
         return self._head
 
 
+    @head.setter
+    def head(self, node):
+        if not isinstance(node, Node):
+            raise TypeError("Cannot set head of linked list to object that is not a Node.")
+
+        self.insert(node, 0)
+
+
     def __iter__(self):
         cur_node = self._head
         while cur_node is not None:
@@ -221,9 +229,18 @@ def test():
 
     a= LinkedList([1, 2, 3])
     assert str(a) == "[1, 2, 3]"
+    assert(len(a)) == 3
 
     a = LinkedList(set([2, 3]))
     assert str(a) in ["[2, 3]", "[3, 2]"]
+    assert(len(a)) == 2
+
+    a = LinkedList([1, 2, 3])
+    assert(len(a)) == 3
+    node = Node(-1)
+    a.head = node
+    assert str(a) == "[-1, 1, 2, 3]"
+    assert(len(a)) == 4
 
     print("All tests pass.")
 
