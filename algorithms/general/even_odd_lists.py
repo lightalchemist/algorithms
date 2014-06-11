@@ -28,10 +28,10 @@ def rearrange_even_odd(linkedlist):
         return
 
     h1 = h0.next_element
-    t0 = h0
+    t0 = h0  # Tail pointer of list of even nodes
     while True:
         # Move t1
-        t1 = t0.next_element
+        t1 = t0.next_element  # Tail pointer of list of odd nodes
         if t1 is None:  # Last element even
             break
         else:
