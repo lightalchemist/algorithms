@@ -10,7 +10,7 @@ Description: Basic implementation of linked list.
 Supports:
     O(n) insertion, deletion
     O(n) retrieval of node at given position
-    O(1) get length of linked list
+    O(1) get size of linked list
 """
 
 class Node(object):
@@ -41,7 +41,7 @@ class Node(object):
 class LinkedList(object):
 
     def __init__(self, items=None):
-        self._length = 0
+        self._size = 0
         self._head = None
         if items is not None:
             self._insert_bulk(items)
@@ -54,9 +54,9 @@ class LinkedList(object):
 
     def insert(self, item, pos=None):
         if pos is not None:
-            self._check_valid_position(pos, self._length)
+            self._check_valid_position(pos, self._size)
         else:  # Default insert at end of linked list
-            pos = self._length
+            pos = self._size
 
         if not isinstance(item, Node):
             item = Node(item)
@@ -73,7 +73,7 @@ class LinkedList(object):
             node.next_element = head.next_element
             head.next_element = node
 
-        self._length += 1
+        self._size += 1
 
 
     def _delete_node_at(self, pos):
@@ -90,7 +90,7 @@ class LinkedList(object):
             node = cur_node.next_element
             cur_node.next_element = node.next_element
 
-        self._length -= 1
+        self._size -= 1
 
 
     def delete_node(self, node):
@@ -108,7 +108,7 @@ class LinkedList(object):
             # Disconnect node from its parent and connect it's children to it.
             cur_node.next_element = node.next_element
 
-        self._length -= 1
+        self._size -= 1
 
 
     def _get_node(self, pos):
@@ -124,7 +124,7 @@ class LinkedList(object):
 
     def _check_valid_position(self, pos, end=None):
         if end is None:  # Default we can only access item within list.
-            end = self._length - 1
+            end = self._size - 1
 
         if not (0 <= pos <= end):
             raise ValueError("Given pos: {} not within"
@@ -142,7 +142,7 @@ class LinkedList(object):
     #         raise TypeError("Cannot set head of linked list to object that is not a Node.")
 
     #     if node not in list(self):
-    #         self._insert(node, 0)  # This will increment length
+    #         self._insert(node, 0)  # This will increment size
     #     else:
     #         raise ValueError("Cannot set other node in current list as head as resulting"
     #                          " list may be ill-defined.")
@@ -169,7 +169,7 @@ class LinkedList(object):
 
 
     def __len__(self):
-        return self._length
+        return self._size
 
 
     def __str__(self):
