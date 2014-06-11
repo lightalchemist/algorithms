@@ -136,12 +136,16 @@ class LinkedList(object):
         return self._head
 
 
-    @head.setter
-    def head(self, node):
-        if not isinstance(node, Node):
-            raise TypeError("Cannot set head of linked list to object that is not a Node.")
+    # @head.setter
+    # def head(self, node):
+    #     if not isinstance(node, Node):
+    #         raise TypeError("Cannot set head of linked list to object that is not a Node.")
 
-        self.insert(node, 0)
+    #     if node not in list(self):
+    #         self._insert(node, 0)  # This will increment length
+    #     else:
+    #         raise ValueError("Cannot set other node in current list as head as resulting"
+    #                          " list may be ill-defined.")
 
 
     def __iter__(self):
@@ -224,23 +228,16 @@ def test():
     assert str(a) == "[1, 2, 3]"
     assert len(a) == 3
 
-    a= LinkedList([-1])
+    a = LinkedList([-1])
     assert str(a) == "[-1]"
 
-    a= LinkedList([1, 2, 3])
+    a = LinkedList([1, 2, 3])
     assert str(a) == "[1, 2, 3]"
     assert(len(a)) == 3
 
     a = LinkedList(set([2, 3]))
     assert str(a) in ["[2, 3]", "[3, 2]"]
     assert(len(a)) == 2
-
-    a = LinkedList([1, 2, 3])
-    assert(len(a)) == 3
-    node = Node(-1)
-    a.head = node
-    assert str(a) == "[-1, 1, 2, 3]"
-    assert(len(a)) == 4
 
     print("All tests pass.")
 
