@@ -7,9 +7,6 @@ if __name__ == '__main__':
     sys.path.insert(0, "..")
 
 
-from data_structures.linked_list import LinkedList
-
-
 def reverse(linkedlist):
     """Reverse a linked list in O(n) time using O(1) storage."""
     before = None
@@ -21,8 +18,12 @@ def reverse(linkedlist):
         before = current  # Move pointers 1 step
         current = after
 
+    return before
+
 
 def test():
+    from data_structures.linked_list import LinkedList
+
     a = LinkedList()
     reverse(a)
     assert str(a) == "[]"
