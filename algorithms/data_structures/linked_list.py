@@ -13,29 +13,7 @@ Supports:
     O(1) get size of linked list
 """
 
-class Node(object):
-    def __init__(self, value, next_element=None):
-        self._next_element = next_element
-        self._value = value
-
-    @property
-    def next_element(self):
-        return self._next_element
-
-    @next_element.setter
-    def next_element(self, element):
-        self._next_element = element
-
-    @property
-    def value(self):
-        return self._value
-
-    @value.setter
-    def value(self, val):
-        self._value = val
-
-    def __str__(self):
-        return "Node with value {}".format(self.value)
+from node import Node
 
 
 class LinkedList(object):
@@ -174,6 +152,20 @@ class LinkedList(object):
 
     def __str__(self):
         return str([x.value for x in self])
+
+
+def reverse(linkedlist):
+    """Reverse a linked list in O(n) time using O(1) storage."""
+    before = None
+    current = linkedlist.head
+    while current is not None:
+        linkedlist._head = current  # Move head to current node
+        after = current.next_element
+        current.next_element = before  # Reverse pointer
+        before = current  # Move pointers 1 step
+        current = after
+
+    return before
 
 
 def test():
