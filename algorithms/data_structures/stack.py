@@ -33,9 +33,9 @@ class Stack(LinkedList):
             self.insert((i, current_max), 0)
 
 
-    def peek(self):
+    def top(self):
         if self.empty():
-            raise IndexError("Peeking into empty stack.")
+            raise IndexError("Cannot look at top of empty stack.")
 
         return self._head.value[0]
 
@@ -74,7 +74,7 @@ def test():
 
 
     s = Stack([1, 2, 3, 4])
-    assert s.peek() == 4
+    assert s.top() == 4
     assert s.max() == 4
 
     assert s.pop() == 4
@@ -87,7 +87,7 @@ def test():
 
     s = Stack([1])
     assert not s.empty()
-    assert s.peek() == 1
+    assert s.top() == 1
     assert s.pop() == 1
     assert len(s) == 0
     assert s.empty()
