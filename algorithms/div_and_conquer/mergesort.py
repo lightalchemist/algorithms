@@ -12,77 +12,69 @@ Time complexity: O(nlogn)
 """
 
 
-def merge(A, B):
+def merge(left, right, result):
     """This is just the merge algorithm for mergesort.
     Time complexity: O(n)
     Space complexity: O(n)
     """
-    C = [None] * (len(A) + len(B))
     i = j = k = 0
-    while i < len(C):
-        if j == len(A):  # Reached end of A
-            # Copy remaining of B to C
-            while k < len(B):
-                C[i] = B[k]
-                k += 1
-                i += 1
-            break
-
-        if k == len(B):  # Reached end of B
-            # Copy remaining of A to C
-            while j < len(A):
-                C[i] = A[j]
-                j += 1
-                i += 1
-            break
-
-        if A[j] < B[k]:
-            C[i] = A[j]  # Copy from A
-            j += 1
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result[k] = left[i]
+            i += 1
         else:
-            C[i] = B[k]  # Coy from B
-            k += 1
+            result[k] = right[j]
+            j += 1
+        k += 1
 
+    while i < len(left):
+        result[k] = left[i]
+        k += 1
         i += 1
+    while j < len(right):
+        result[k] = right[j]
+        k += 1
+        j += 1
 
-    return C
+    return result
 
 
-def sort(S):
+def sort(seq):
     """Implementation of merge sort.
     Time complexity: O(nlogn)
     Space complexity: O(n)
     """
 
-    if len(S) <= 1:
-        return S
+    if len(seq) <= 1:
+        return seq
 
-    mid = len(S) // 2
-    A = sort(S[:mid])
-    B = sort(S[mid:])
-    S = merge(A, B)
+    mid = len(seq) // 2
+    left = sort(seq[:mid])
+    right = sort(seq[mid:])
+    merge(left, right, seq)
 
-    return S
-
-
-import random
+    return seq
 
 
 def test():
+    import random
 
     A = [2, 2, 3, 4]
     B = [1, 2, 3, 5, 6]
-    C = merge(A, B)
+    C = [None] * (len(A) + len(B))
+    merge(A, B, C)
     assert C == [1, 2, 2, 2, 3, 3, 4, 5, 6]
 
     A = [-1, 3, 10, 10]
     B = [-5, -1, 5, 9, 11]
-    C = merge(A, B)
+    C = [None] * (len(A) + len(B))
+    C = merge(A, B, C)
     assert C == [-5, -1, -1, 3, 5, 9, 10, 10, 11]
 
     A = []
     B = [1, 2]
-    C = merge(A, B)
+    C = [None] * (len(A) + len(B))
+    C = merge(A, B, C)
     assert C == [1, 2]
 
     S = []
@@ -99,6 +91,15 @@ def test():
 
     S = range(20)
     random.shuffle(S)
+    S_sorted = sort(S)
+    assert S_sorted == sorted(S)
+
+    S = range(10000)
+    random.shuffle(S)
+    S_sorted = sort(S)
+    assert S_sorted == sorted(S)
+
+    S = [random.randint(-1000, 1000) for _ in range(10000)]
     S_sorted = sort(S)
     assert S_sorted == sorted(S)
 
