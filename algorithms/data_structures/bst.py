@@ -10,6 +10,23 @@ class bst(object):
         self.right = right
 
 
+def recurse_find(T, key):
+    """Find node with key using inorder traversal."""
+    if T is None:
+        return None
+
+    if key <= T.data:
+        node = recurse_find(T.left, key)  # Search left-tree first
+        if node is not None:
+            return node
+        elif T.data == key:  # Then check for current node
+            return T
+        else:  # Key not found
+            return None
+    else:  # Search right sub-tree
+        return recurse_find(T.right, key)
+
+
 def insert(T, data):
     """Insert data into a bst while maintaining the bst property."""
     if data <= T.data:
@@ -106,6 +123,10 @@ def test():
     inorder_traversal(b, result)
     assert result == [1, 2, 5, 6, 10]
     assert check_bst_property(b)
+
+    node = recurse_find(b, 6)
+    assert node is not None
+    assert node.right.data == 10
 
 
 if __name__ == '__main__':
