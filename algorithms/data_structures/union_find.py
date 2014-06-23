@@ -17,6 +17,7 @@ Time complexity to connect node p and q: O(logn)
 class UnionFindBasic(object):
 
     def __init__(self, num_elements):
+        """Initialize union find data structure for num_elements."""
         self._id = range(num_elements)
 
 
@@ -41,6 +42,7 @@ class UnionFindBasic(object):
 
 
     def reset(self):
+        """Reset data structure to state when it was just initialized."""
         self._id = range(len(self._id))
 
 
@@ -56,15 +58,15 @@ class UnionFindWeighted(UnionFindBasic):
 
     def __init__(self, num_elements):
         super(UnionFindWeighted, self).__init__(num_elements)
-        self._size = [0] * num_elements
         self._num_elements = num_elements
+        self._size = [0] * num_elements  # For tracking size of each subtree
 
 
     def find(self, p):
         """Return the root of node p,
         which is also the id of the connected component p belongs to."""
         i = p
-        while i != self._id[i]:
+        while i != self._id[i]:  # Root node is node that points to itself
             i = self._id[i]
 
         return i
@@ -86,6 +88,7 @@ class UnionFindWeighted(UnionFindBasic):
 
 
     def reset(self):
+        """Reset data structure to state when it was just initialized."""
         super(UnionFindWeighted, self).reset()
         self._size = [0] * self._num_elements
 
