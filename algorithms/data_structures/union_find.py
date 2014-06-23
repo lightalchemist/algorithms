@@ -59,7 +59,7 @@ class UnionFindWeighted(UnionFindBasic):
     def __init__(self, num_elements):
         super(UnionFindWeighted, self).__init__(num_elements)
         self._num_elements = num_elements
-        self._size = [0] * num_elements  # For tracking size of each subtree
+        self._size = [1] * num_elements  # For tracking size of each subtree
 
 
     def find(self, p):
@@ -90,7 +90,7 @@ class UnionFindWeighted(UnionFindBasic):
     def reset(self):
         """Reset data structure to state when it was just initialized."""
         super(UnionFindWeighted, self).reset()
-        self._size = [0] * self._num_elements
+        self._size = [1] * self._num_elements
 
 
     def __str__(self):
