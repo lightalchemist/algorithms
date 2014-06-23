@@ -34,11 +34,14 @@ class UnionFindBasic(object):
 
     def union(self, p, q):
         """Connect node q and node q."""
-        newfind = self._id[p]
-        oldfind = self._id[q]
+        newroot = self._id[q]
+        oldroot = self._id[p]
+        if newroot == oldroot:
+            return
+
         for i, x in enumerate(self._id):
-            if x == oldfind:
-                self._id[i] = newfind
+            if x == oldroot:
+                self._id[i] = newroot
 
 
     def reset(self):
