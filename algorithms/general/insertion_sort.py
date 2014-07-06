@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+"""
+File: insertion_sort.py
+Author: Hong-Wei Ng
+Email: lightalchemist@gmail.com
+Github: https://github.com/lightalchemist
+Description: Implementation of insertion sort algorithm.
+"""
 
 def sort(a):
     for i in range(1, len(a)):
@@ -12,6 +19,7 @@ def sort(a):
 
 import copy
 import random
+
 
 def test():
     a = range(10)
