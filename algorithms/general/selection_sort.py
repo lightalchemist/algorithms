@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 
+"""
+File: selection_sort.py
+Author: Hong-Wei Ng
+Email: lightalchemist@gmail.com
+Github: https://github.com/lightalchemist
+Description: Implementation of selection sort algorithm.
+"""
 
 def sort(seq):
-    minIdx = 0
-
     N = len(seq)
     for i in range(N):
         min_item = float('inf')
