@@ -50,17 +50,12 @@ def fib(n):
         raise ValueError("Negafibonnaci numbers are not supported.")
     elif n == 0:
         return 0
-    elif n == 1:
-        return 1
 
-    F_1, F_2 = 1, 0  # F_{n-1} and F_{n-2}
-    F_n = F_1 + F_2  # F_{n}
-    for i in range(2, n):
-        F_2 = F_1
-        F_1 = F_n
-        F_n = F_1 + F_2
+    F1, F2 = 1, 0  # F_{n-1} and F_{n-2}
+    for i in range(1, n):
+        F1, F2 = F1 + F2, F1
 
-    return F_n
+    return F1
 
 
 def test():
