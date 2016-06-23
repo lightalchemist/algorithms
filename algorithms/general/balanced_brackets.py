@@ -10,7 +10,7 @@ Description: Check if brackets in given expression are balanced
 """
 
 
-def verify_balanced_brackets(expr):
+def is_balanced(expr):
     print("Checking expression: {}".format(expr))
 
     # Close and open pairs
@@ -37,10 +37,10 @@ def verify_balanced_brackets(expr):
     return len(stack) == 0
 
 
-def verify_balanced_brackets2(expr):
+def is_balanced2(expr):
     # This version can't handle ' and " because
     # it can't tell when it is meant to open and when to close
-    # In principle it should be faster than verify_balanced_brackets2
+    # In principle it should be faster than is_balanced2
     # as it allows for early termination
 
     pair = {')': '(',
@@ -69,30 +69,30 @@ def verify_balanced_brackets2(expr):
 
 def main():
     expr = "([])[]()"
-    assert(verify_balanced_brackets2(expr))
+    assert(is_balanced2(expr))
 
     expr = "((([()]))())"
-    assert(verify_balanced_brackets2(expr))
+    assert(is_balanced2(expr))
 
     expr = "{([<>])}"
-    assert(verify_balanced_brackets2(expr))
+    assert(is_balanced2(expr))
 
     code_snippet = """if (value == 10) {
                           print("Value is 10");
                       }
                    """
-    assert(verify_balanced_brackets2(code_snippet))
+    assert(is_balanced2(code_snippet))
 
-    assert(verify_balanced_brackets2(""))
+    assert(is_balanced2(""))
 
     expr = "]"
-    assert(verify_balanced_brackets2(expr) == False)
+    assert(is_balanced2(expr) == False)
 
     expr = "]["
-    assert(verify_balanced_brackets2(expr) == False)
+    assert(is_balanced2(expr) == False)
 
     expr = "([]]()"
-    assert(verify_balanced_brackets2(expr) == False)
+    assert(is_balanced2(expr) == False)
 
 
 
