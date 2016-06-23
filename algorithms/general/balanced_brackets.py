@@ -62,7 +62,9 @@ def verify_balanced_brackets2(expr):
             if pair.get(c, None) != top:
                 return False
 
-    return True
+    # Make sure stack is empty at this point
+    # and do not contain any leftover opening brackets
+    return not stack
 
 
 def main():
