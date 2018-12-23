@@ -45,3 +45,5 @@ docs/_build/
 
 # vim files
 .ropeproject
+
+*.ipynb_checkpoints/
